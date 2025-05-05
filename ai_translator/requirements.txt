@@ -1,0 +1,10 @@
+flask
+gradio
+langchain
+langchain_openai
+loguru
+pandas
+pdfplumber
+pillow
+reportlab
+pyyaml
