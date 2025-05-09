@@ -1,0 +1,7 @@
+jieba
+matplotlib
+numpy
+torch
+torchvision
+torchaudio
+
