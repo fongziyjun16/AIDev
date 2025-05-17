@@ -1,7 +1,11 @@
+pandas
+numpy
+scikit-learn
+
+# pip3 install torch --index-url https://download.pytorch.org/whl/cu128
 torch
 
 transformers
 datasets
-
-pandas
-
+evaluate
+accelerate
