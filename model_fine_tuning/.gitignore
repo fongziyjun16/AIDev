@@ -1,4 +1,3 @@
 .idea
 .venv
-datasets
-models
+fine_tuned_models

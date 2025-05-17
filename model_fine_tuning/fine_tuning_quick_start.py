@@ -3,25 +3,20 @@ from datasets import load_dataset
 import evaluate
 import numpy as np
 
-dataset = load_dataset("./datasets/yelp_review_full")
-# print(len(dataset["train"]))
-# print(len(dataset["test"]))
+dataset = load_dataset("yelp_review_full")
 
-tokenizer = AutoTokenizer.from_pretrained("models/base/google-bert/bert-base-cased")
+tokenizer = AutoTokenizer.from_pretrained("bert-base-cased")
 # print(tokenizers)
 
 def tokenize_function(example):
     return tokenizer(example["text"], padding="max_length", truncation=True)
 
-tokenized_dataset = dataset.map(tokenize_function, batched=True)
+tokenized_datasets = dataset.map(tokenize_function, batched=True)
 
-train_dataset = tokenized_dataset["train"].shuffle(seed=32)
-test_dataset = tokenized_dataset["test"].shuffle(seed=32)
+train_dataset = tokenized_datasets["train"].shuffle(seed=42).select(range(1024))
+test_dataset = tokenized_datasets["test"].shuffle(seed=42).select(range(1024))
 
-model = AutoModelForSequenceClassification.from_pretrained(
-    "models/base/google-bert/bert-base-cased",
-    num_labels=5
-)
+model = AutoModelForSequenceClassification.from_pretrained("bert-base-cased", num_labels=5)
 
 metric = evaluate.load("accuracy")
 def compute_metrics(eval_pred):
@@ -29,7 +24,7 @@ def compute_metrics(eval_pred):
     predictions = np.argmax(logits, axis=1)
     return metric.compute(predictions=predictions, references=labels)
 
-fine_tuned_model_dir = "models/fine_tuned/bert-base-cased-ft-yelp"
+fine_tuned_model_dir = "fine_tuned_models/bert-base-cased-fine-tuned-yelp"
 
 training_args = TrainingArguments(
     output_dir=fine_tuned_model_dir,
