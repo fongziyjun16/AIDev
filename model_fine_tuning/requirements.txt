@@ -1,12 +1,17 @@
 pandas
 numpy
 scikit-learn
+qwen-vl-utils
 
-# pip3 install torch --index-url https://download.pytorch.org/whl/cu128
 torch
+torchvision
+torchaudio
 
 transformers
 datasets
 evaluate
 accelerate
 huggingface_hub
+hf_xet
+peft
+trl
